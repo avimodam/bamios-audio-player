@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bamboo Audio Player Demos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/bamios.min.js"></script>
+    <link rel="stylesheet" href="css/bamios.min.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(-65deg, #46eeaa, #2cbfc7);
+      }
+
+      .bamios {
+        margin-bottom: 20px;
+      }
+
+      @media screen and (min-width: 520px) {
+        .bamios {
+          margin-bottom: 45px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="my-audio-player-1">
+      <audio>
+        <source src="audio/Future-Technology.mp3" />
+      </audio>
+    </div>
+    <div id="my-audio-player-2">
+      <audio>
+        <source src="audio/Space-Heroes.mp3" />
+      </audio>
+    </div>
+    <script>
+      new Bamios("#my-audio-player-1");
+      new Bamios("#my-audio-player-2");
+    </script>
+  </body>
+</html>
