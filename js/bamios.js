@@ -406,6 +406,9 @@
     }, {
       key: "play",
       value: function play() {
+        if (!this.isPlaying && this.pauseOthersOnPlay) {
+          Bamios.pauseOtherPlayers();
+        }
         Bamios.playPlayer(this.player);
       }
     }, {
