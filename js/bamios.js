@@ -397,13 +397,6 @@
         });
       }
     }, {
-      key: "setCurrentTime",
-      value: function setCurrentTime(second) {
-        if (second >= 0 && second <= this.audio.duration) {
-          this.audio.currentTime = second;
-        }
-      }
-    }, {
       key: "play",
       value: function play() {
         if (!this.isPlaying && this.pauseOthersOnPlay) {
@@ -421,6 +414,18 @@
       value: function stop() {
         Bamios.pausePlayer(this.player);
         this.audio.currentTime = 0;
+      }
+    }, {
+      key: "setCurrentTime",
+      value: function setCurrentTime(second) {
+        if (second >= 0 && second <= this.audio.duration) {
+          this.audio.currentTime = second;
+        }
+      }
+    }, {
+      key: "setPauseOthersOnPlay",
+      value: function setPauseOthersOnPlay(pauseOthersOnPlay) {
+        this.pauseOthersOnPlay = pauseOthersOnPlay;
       }
     }], [{
       key: "playIcon",
