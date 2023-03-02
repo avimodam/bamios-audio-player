@@ -51,6 +51,8 @@
       if (undefined === this.audio || null === this.audio) throw 'Cannot determine audio element!';
       this.stopOthersOnPlay = undefined !== opts.stopOthersOnPlay ? opts.stopOthersOnPlay : true;
       this.muted = false;
+      this.isAdjustingTime = false;
+      this.isClickedPlayBtn = false;
       this.initUi();
       this.initEvents();
     }
@@ -113,8 +115,10 @@
             Bamios.pauseOtherPlayers();
           }
           if (!playBtnEvent.currentTarget.classList.contains('bamios-playing')) {
+            _this.isClickedPlayBtn = true;
             Bamios.playPlayer(_this.player);
           } else {
+            _this.isClickedPlayBtn = false;
             Bamios.pausePlayer(_this.player);
           }
         });
@@ -160,6 +164,8 @@
         var mouseEnteredDurationBar = false;
         durationBar.addEventListener('mousedown', function (durationBarEvent) {
           mouseClickedDurationBar = true;
+          _this.isAdjustingTime = true;
+          _this.pause();
           var offsetX = durationBarEvent.clientX - durationBar.getBoundingClientRect().left;
           if (offsetX >= 0 && offsetX <= durationBar.getBoundingClientRect().width) {
             var second = offsetX / durationBar.getBoundingClientRect().width * _this.audio.duration;
@@ -167,8 +173,15 @@
             progressHandle.style.transform = 'translate(' + (offsetX - 8) + 'px, -50%)';
           }
         });
-        window.addEventListener('mouseup', function (durationBarEvent) {
+        window.addEventListener('mouseup', function () {
           mouseClickedDurationBar = false;
+          if (_this.isAdjustingTime) {
+            _this.isAdjustingTime = false;
+            if (_this.stopOthersOnPlay && _this.isClickedPlayBtn) {
+              Bamios.pauseOtherPlayers();
+              _this.play();
+            }
+          }
           if (!mouseEnteredDurationBar) {
             progressHandle.style.transition = 'opacity 0.6s ease-in-out';
             progressHandle.style.opacity = 0;
@@ -177,7 +190,7 @@
             _this.audio.muted = false;
           }
         });
-        durationBar.addEventListener('mouseenter', function (durationBarEvent) {
+        durationBar.addEventListener('mouseenter', function () {
           mouseEnteredDurationBar = true;
           progressHandle.style.display = 'block';
           progressHandle.style.transition = 'opacity 0.15s ease-in-out';
