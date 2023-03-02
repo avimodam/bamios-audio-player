@@ -215,17 +215,21 @@
         progressHandle.classList.add('bamios-progress-handle');
         durationBar.append(progressHandle);
         durationBar.append(this.progress);
-        this.audio.onloadedmetadata = function () {
-          // Add duration bar
-          _this.controlsRight.append(durationBar);
 
-          // Duration
-          _this.duration = document.createElement('div');
-          _this.duration.classList.add('bamios-duration');
+        // Add duration bar
+        this.controlsRight.append(durationBar);
+
+        // Duration
+        this.duration = document.createElement('div');
+        this.duration.classList.add('bamios-duration');
+        this.duration.innerText = '00:00';
+        this.controlsRight.append(this.duration);
+
+        // Volume control
+        this.controlsRight.append(this.volumeCtl);
+        this.volumeSlider.style.width = '100%';
+        this.audio.onloadedmetadata = function () {
           _this.duration.innerText = Bamios.toTimeString(_this.audio.duration);
-          _this.controlsRight.append(_this.duration);
-          _this.controlsRight.append(_this.volumeCtl);
-          _this.volumeSlider.style.width = '100%';
           _this.volumeHandle.style.transform = 'translate(' + (_this.audio.volume * 80 - 8) + 'px, -50%)';
         };
         this.player.append(this.controlsRight);
