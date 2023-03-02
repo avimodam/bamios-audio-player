@@ -49,7 +49,7 @@
       if (undefined === this.player || null === this.player) throw 'Cannot determine player element!';
       this.audio = typeof el === 'string' ? document.querySelector(el + ' audio') : undefined;
       if (undefined === this.audio || null === this.audio) throw 'Cannot determine audio element!';
-      this.stopOthersOnPlay = undefined !== opts.stopOthersOnPlay ? opts.stopOthersOnPlay : true;
+      this.pauseOthersOnPlay = undefined !== opts.pauseOthersOnPlay ? opts.pauseOthersOnPlay : true;
       this.muted = false;
       this.isAdjustingTime = false;
       this.isClickedPlayBtn = false;
@@ -111,7 +111,7 @@
         playBtn.classList.add('bamios-btn');
         playBtn.classList.add('bamios-btn-play-pause');
         playBtn.addEventListener('click', function (playBtnEvent) {
-          if (!playBtnEvent.currentTarget.classList.contains('bamios-playing') && _this.stopOthersOnPlay) {
+          if (!playBtnEvent.currentTarget.classList.contains('bamios-playing') && _this.pauseOthersOnPlay) {
             Bamios.pauseOtherPlayers();
           }
           if (!playBtnEvent.currentTarget.classList.contains('bamios-playing')) {
@@ -177,7 +177,7 @@
           mouseClickedDurationBar = false;
           if (_this.isAdjustingTime) {
             _this.isAdjustingTime = false;
-            if (_this.stopOthersOnPlay && _this.isClickedPlayBtn) {
+            if (_this.pauseOthersOnPlay && _this.isClickedPlayBtn) {
               Bamios.pauseOtherPlayers();
               _this.play();
             }
